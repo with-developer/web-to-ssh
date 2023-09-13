@@ -1,1 +1,28 @@
-Init Project!
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Terminal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xterm"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+
+<div id="terminal">test</div>
+
+<script>
+    var term = new Terminal();
+    term.open(document.getElementById('terminal'));
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    term.onData(function(data) {
+        socket.emit('send_command', {command: data});
+    });
+
+    socket.on('new_output', function(data) {
+        term.write(data.output);
+    });
+</script>
+
+</body>
+</html>
