@@ -7,13 +7,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 </head>
 <body>
-
-<div id="terminal">test</div>
+<div>
+    <form action="/" method="post">
+        <div class="form">
+            <div class="form-item">
+                IP<input type="text" id="remote_ip">
+            </div>
+            <div class="form-item">
+                PORT<input type="text" id="remote_port">
+            </div>
+            <div class="form-item">
+                USER<input type="text" id="remote_user">
+            </div>
+            <div class="form-item">
+                PASSWORD<input type="text" id="remote_password">
+            </div>
+        </div>
+    </form>
+</div>
+<div id="terminal"></div>
 
 <script>
     var term = new Terminal();
     term.open(document.getElementById('terminal'));
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    var socket = io.connect('http://127.0.0.1:5000');
 
     term.onData(function(data) {
         socket.emit('send_command', {command: data});
